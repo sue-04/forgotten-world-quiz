@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Which Path of the Forgotten World Calls to You?</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #1b1b1b;
+      color: #f0f0f0;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .quiz-box {
+      background-color: #2e2e2e;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #000;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #666;
+    }
+    #result {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #333;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-box">
+    <h1>Which Path of the Forgotten World Calls to You?</h1>
+    <div id="quiz"></div>
+    <div id="result"></div>
+  </div>  <script>
+    const quizData = [
+      {
+        question: "You kneel before a ruined altar, moonlight glinting on a strange object nestled in ash. It pulses faintly in your hands. What do you do?",
+        options: [
+          { text: "Touch it and let it guide you—no matter the danger.", type: "ember" },
+          { text: "Study the symbols carved into it. Maybe it holds a clue.", type: "glass" },
+          { text: "Whisper a prayer and place it back where you found it.", type: "rooted" },
+          { text: "Slip it into your pocket. If it's important, it’ll reveal itself later.", type: "hollow" },
+        ],
+      },
+      {
+        question: "A hooded figure holds out a sealed letter addressed to you. What do you do?",
+        options: [
+          { text: "Demand to know who they are and what they want.", type: "ember" },
+          { text: "Open the letter carefully, even if they protest.", type: "glass" },
+          { text: "Accept it with a bow and thank them.", type: "rooted" },
+          { text: "Pretend to take it, but palm it and slip away.", type: "hollow" },
+        ],
+      },
+      {
+        question: "A melody plays from a cavern wall. What does it make you feel?",
+        options: [
+          { text: "A burning need to do something. The world must change.", type: "ember" },
+          { text: "A puzzle forming in your mind. You must find the rest.", type: "glass" },
+          { text: "A deep sorrow, like remembering a home you never had.", type: "rooted" },
+          { text: "An eerie comfort. You’ve heard it before… in a dream.", type: "hollow" },
+        ],
+      },
+      {
+        question: "You're offered power, but it demands a sacrifice. What do you give?",
+        options: [
+          { text: "A piece of your past—memories you’ll never recover.", type: "ember" },
+          { text: "Your name—your identity, now hidden from the world.", type: "glass" },
+          { text: "Your voice—now you must listen more than speak.", type: "rooted" },
+          { text: "Nothing. You offer a trick instead.", type: "hollow" },
+        ],
+      },
+      {
+        question: "The path splits. Which do you choose?",
+        options: [
+          { text: "Toward the fire. You are not afraid.", type: "ember" },
+          { text: "Into the mist. You’ll find clarity there.", type: "glass" },
+          { text: "The green light. It feels like home.", type: "rooted" },
+          { text: "The shadow. It hides what others fear to face.", type: "hollow" },
+        ],
+      },
+    ];
+
+    const results = {
+      ember: "<h2>The Ember Seeker 🔥</h2><p>You are the flame that remembers. Bold, passionate, and driven by instinct, you awaken forgotten fires wherever you walk. You were born to challenge fate—and maybe burn it down.</p>",
+      glass: "<h2>The Glass Witness 📜</h2><p>You see what others miss. A seeker of truths and forgotten systems, you are the scribe of memory and logic. Your path winds through shadows, always in pursuit of clarity.</p>",
+      rooted: "<h2>The Rooted Warden 🌿</h2><p>You hold the oldest oaths. Loyal, patient, and protective, you carry the strength of stillness and the power of unseen roots.</p>",
+      hollow: "<h2>The Hollow Masque 🎭</h2><p>You are the echo in the mirror. Shifting, clever, and hard to pin down, you wear masks not to deceive—but to survive.</p>",
+    };
+
+    let currentQuestion = 0;
+    const scores = { ember: 0, glass: 0, rooted: 0, hollow: 0 };
+    const quizContainer = document.getElementById("quiz");
+    const resultContainer = document.getElementById("result");
+
+    function showQuestion() {
+      const q = quizData[currentQuestion];
+      quizContainer.innerHTML = `<div class="question"><h3>Q${currentQuestion + 1}: ${q.question}</h3><div class="options">${q.options
+        .map(
+          (opt, idx) => `<button onclick="selectOption('${opt.type}')">${opt.text}</button>`
+        )
+        .join("")}</div></div>`;
+    }
+
+    function selectOption(type) {
+      scores[type]++;
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      quizContainer.style.display = "none";
+      const highest = Object.keys(scores).reduce((a, b) => (scores[a] > scores[b] ? a : b));
+      resultContainer.style.display = "block";
+      resultContainer.innerHTML = results[highest];
+    }
+
+    showQuestion();
+  </script></body>
+  </html>
